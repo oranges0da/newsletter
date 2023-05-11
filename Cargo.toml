@@ -3,6 +3,9 @@ name = "newsletter"
 version = "0.1.0"
 edition = "2021"
 
+[profile.dev]
+incremental = true
+
 [dependencies]
 actix-web = "4"
 tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
