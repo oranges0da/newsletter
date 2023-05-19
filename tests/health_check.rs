@@ -1,6 +1,6 @@
 use newsletter::helpers;
 
-#[actix_web::test]
+#[tokio::test]
 async fn health_check_works() {
     let addr = helpers::spawn_app(); // get full local address of spawned app
 
