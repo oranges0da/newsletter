@@ -2,8 +2,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Settings {
-    pub db: DBSettings,
     pub app_port: u16,
+    pub db: DBSettings,
 }
 
 #[derive(Deserialize)]

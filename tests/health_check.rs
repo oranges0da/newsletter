@@ -1,10 +1,13 @@
+use newsletter::config;
 use newsletter::server::run;
 use std::net::TcpListener;
 
 // spawn instance of app for testing
 fn spawn_app() -> String {
-    let listener = TcpListener::bind("127.0.0.1:0").expect("Failed to bind random port");
-    let port = listener.local_addr().unwrap().port(); // retrieve assigned port
+    let config = config::get_config().expect("Failed to read config from yaml.");
+
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", config.app_port))
+        .expect("Failed to bind random port");
 
     let server = run(listener).expect("Failed to bind address");
 
@@ -12,18 +15,18 @@ fn spawn_app() -> String {
     // tokio::spawn will immediately return without waiting for task to complete
     let _ = tokio::spawn(server);
 
-    format!("http://127.0.0.1:{}", port)
+    format!("http://127.0.0.1:{}", config.app_port)
 }
 
 #[actix_web::test]
 async fn health_check_works() {
-    let address = spawn_app(); // spawn instance of server
+    let addr = spawn_app(); // get full local address of spawned app
 
     // instatiate a client and send a request to the given address
     let client = reqwest::Client::new();
 
     let res = client
-        .get(format!("{}/health_check", address))
+        .get(format!("{}/health_check", addr))
         .send()
         .await
         .expect("Failed to send request.");
