@@ -3,8 +3,8 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct FormData {
-    email: String,
     name: String,
+    email: String,
 }
 
 // if form data valid return 200 OK
