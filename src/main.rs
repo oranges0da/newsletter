@@ -7,9 +7,9 @@ async fn main() -> std::io::Result<()> {
     let config = config::get_config().expect("Failed to read configuration.");
     let addr = format!("127.0.0.1:{}", config.app_port);
 
-    let listener = TcpListener::bind(addr).expect("Failed to bind random port");
+    let listener = TcpListener::bind(addr).expect("Failed to bind to address port.");
 
-    println!("{}", config.app_port);
+    println!("Running on port: {}", config.app_port);
 
     server::run(listener)?.await
 }

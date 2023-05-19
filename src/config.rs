@@ -3,15 +3,15 @@ use serde::Deserialize;
 #[derive(Deserialize)]
 pub struct Settings {
     pub app_port: u16,
-    pub db: DBSettings,
+    pub db_settings: DBSettings,
 }
 
 #[derive(Deserialize)]
 pub struct DBSettings {
     pub username: String,
     pub password: String,
-    pub port: u16,
     pub host: String,
+    pub port: u16,
     pub database_name: String,
 }
 
