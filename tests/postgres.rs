@@ -7,7 +7,7 @@ async fn connect_to_postgres() {
     let config = config::get_config().expect("Failed to read config in conn_postgres");
     let conn_string = config.db_settings.get_connection_string();
 
-    let conn = PgConnection::connect(&conn_string)
+    PgConnection::connect(&conn_string)
         .await
         .expect("Failed to connect to postgres.");
 }
