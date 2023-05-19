@@ -1,4 +1,6 @@
 use crate::{config, server};
+
+use actix_web::HttpResponse;
 use std::net::TcpListener;
 
 // spawn instance of app for testing
@@ -15,4 +17,8 @@ pub fn spawn_app() -> String {
     let _ = tokio::spawn(server);
 
     format!("http://127.0.0.1:{}", config.app_port)
+}
+
+pub async fn health_check() -> HttpResponse {
+    HttpResponse::Ok().body("Health check working!")
 }
