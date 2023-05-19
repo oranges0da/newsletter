@@ -23,7 +23,7 @@ DB_PORT="${POSTGRES_PORT:=5431}"
 # Allow to skip Docker if a dockerized Postgres database is already running
 if [[ -z "${SKIP_DOCKER}" ]]
 then
-  docker run \
+  docker run --name newsletter \
       -e POSTGRES_USER=${DB_USER} \
       -e POSTGRES_PASSWORD=${DB_PASSWORD} \
       -e POSTGRES_DB=${DB_NAME} \
@@ -42,3 +42,6 @@ done
 export DATABASE_URL=postgres://${DB_USER}:${DB_PASSWORD}@localhost:${DB_PORT}/${DB_NAME}
 
 sqlx database create
+sqlx migrate run
+
+>&2 echo "Postgres has been migrated, ready to go!"

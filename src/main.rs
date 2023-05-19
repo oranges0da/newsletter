@@ -9,5 +9,7 @@ async fn main() -> std::io::Result<()> {
 
     let listener = TcpListener::bind(addr).expect("Failed to bind random port");
 
+    println!("{}", config.app_port);
+
     server::run(listener)?.await
 }
