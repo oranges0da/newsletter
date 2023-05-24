@@ -3,7 +3,7 @@ use newsletter::helpers;
 #[tokio::test]
 async fn sub_returns_200_if_valid_form() {
     // spawn test app and client
-    let app_address = helpers::spawn_app();
+    let app_address = helpers::spawn_app().await;
     let client = reqwest::Client::new();
 
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
