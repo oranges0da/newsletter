@@ -2,13 +2,12 @@ use newsletter::helpers;
 
 #[tokio::test]
 async fn health_check_works() {
-    let addr = helpers::spawn_app().await; // get full local address of spawned app
-
-    // instatiate a client and send a request to the given address
+    // spawn test app and reqwest client for sending requests
+    let app = helpers::spawn_app().await;
     let client = reqwest::Client::new();
 
     let res = client
-        .get(format!("{}/health_check", &addr))
+        .get(format!("{}/health_check", app.address))
         .send()
         .await
         .expect("Failed to send request.");

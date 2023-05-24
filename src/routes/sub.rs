@@ -9,6 +9,6 @@ pub struct FormData {
 }
 
 // if form data valid return 200 OK
-pub async fn subscribe(_form: web::Form<FormData>, _conn: web::Data<PgPool>) -> HttpResponse {
+pub async fn subscribe(_form: web::Form<FormData>, _db_pool: web::Data<PgPool>) -> HttpResponse {
     HttpResponse::Ok().finish()
 }
