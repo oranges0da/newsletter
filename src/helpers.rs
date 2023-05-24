@@ -13,7 +13,7 @@ pub async fn spawn_app() -> String {
     let listener = TcpListener::bind(format!("127.0.0.1:{}", config.app_port))
         .expect("Failed to bind random port");
 
-    let server = server::run(listener).expect("Failed to bind address");
+    let server = server::run(listener, conn).expect("Failed to bind address");
 
     // start the server as a background task using tokio::spawn
     // tokio::spawn will immediately return without waiting for task to complete
