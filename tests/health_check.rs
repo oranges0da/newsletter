@@ -1,4 +1,5 @@
 use newsletter::helpers;
+use reqwest;
 
 #[tokio::test]
 async fn health_check_works() {
@@ -6,8 +7,11 @@ async fn health_check_works() {
     let app = helpers::spawn_app().await;
     let client = reqwest::Client::new();
 
+    // format address with http:// (you'd be surprised how many errors this can cause!)
+    let address = format!("http://{}/health_check", app.address);
+
     let res = client
-        .get(format!("{}/health_check", app.address))
+        .get(address)
         .send()
         .await
         .expect("Failed to send request.");

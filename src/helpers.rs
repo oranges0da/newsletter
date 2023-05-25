@@ -17,7 +17,7 @@ pub async fn spawn_app() -> TestApp {
         .await
         .expect("Failed to connect to postgres");
 
-    let listener = TcpListener::bind(&address).expect("Failed to bind random port");
+    let listener = TcpListener::bind(&address).expect("This is bs");
 
     let server = server::run(listener, db_pool.clone()).expect("Failed to bind address");
 
