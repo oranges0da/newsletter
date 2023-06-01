@@ -7,12 +7,12 @@ async fn sub_returns_200_if_valid_form() {
     let client = reqwest::Client::new();
 
     // format address with http:// for readability and reasons
-    let address = format!("http://{}/sub", app.address);
+    let url = format!("http://{}/sub", app.address);
 
     // send valid form data and expect 200 OK response
     let body = "name=le%20guin&email=ursula_le_guin%40gmail.com";
     let res = client
-        .post(address)
+        .post(url)
         .header("Content-Type", "application/x-www-form-urlencoded")
         .body(body)
         .send()

@@ -8,10 +8,10 @@ async fn health_check_works() {
     let client = reqwest::Client::new();
 
     // format address with http:// (you'd be surprised how many errors this can cause!)
-    let address = format!("http://{}/health_check", app.address);
+    let url = format!("http://{}/health_check", app.address);
 
     let res = client
-        .get(address)
+        .get(url)
         .send()
         .await
         .expect("Failed to send request.");
