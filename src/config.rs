@@ -16,14 +16,14 @@ pub struct DBSettings {
 }
 
 impl DBSettings {
-    pub fn get_connection_string(&self) -> String {
+    pub fn get_database_url(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}/{}",
             self.username, self.password, self.host, self.port, self.database_name
         )
     }
 
-    pub fn get_connection_string_without_name(&self) -> String {
+    pub fn get_database_url_without_name(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}",
             self.username, self.password, self.host, self.port
