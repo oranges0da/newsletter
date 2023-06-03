@@ -5,7 +5,7 @@ use sqlx::PgPool;
 #[tokio::test]
 async fn query_postgres() {
     let config = config::get_config().expect("Failed to read config in conn_postgres");
-    let conn_string = config.db_settings.get_connection_string();
+    let conn_string = config.db_settings.get_database_url();
 
     let conn_pool = PgPool::connect(&conn_string)
         .await

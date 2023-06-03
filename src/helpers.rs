@@ -2,7 +2,7 @@ use crate::{
     config::{self, DBSettings},
     server,
 };
-use sqlx::{query, Connection, Executor, PgConnection, PgPool};
+use sqlx::{Connection, Executor, PgConnection, PgPool};
 use std::net::TcpListener;
 use uuid::Uuid;
 
