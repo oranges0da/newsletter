@@ -15,8 +15,8 @@ pub struct DBSettings {
     pub database_name: String,
 }
 
+// implement simple getters for DATABASE_URL
 impl DBSettings {
-    // simple getters
     pub fn get_database_url(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}/{}",
