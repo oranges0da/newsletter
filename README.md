@@ -12,3 +12,5 @@
 - [sqlx](https://github.com/launchbadge/sqlx)
 - [PostgreSQL](https://postgresql.org)
 - [Docker](https://docker.com)
+
+## [License](https://github.com/oranges0da/newsletter/blob/main/LICENSE)
