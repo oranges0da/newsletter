@@ -21,7 +21,7 @@ pub async fn spawn_app() -> TestApp {
     let listener = TcpListener::bind(&address).expect("Failed to bind address to TcpListener.");
 
     // create new database for testing and connect to it
-    let db_pool = spawn_db_pool(config.db_settings.clone()).await;
+    let db_pool = spawn_db_pool(&config.db_settings).await;
 
     let server = server::run(listener, db_pool.clone()).expect("Failed to bind address");
 
@@ -33,10 +33,23 @@ pub async fn spawn_app() -> TestApp {
     TestApp { address, db_pool }
 }
 
-pub async fn spawn_db_pool(config: DBSettings) -> PgPool {
+pub async fn spawn_db_pool(config: &DBSettings) -> PgPool {
+    let mut conn = PgConnection::connect(&config.get_database_url_without_name())
+        .await
+        .expect("Failed to connect to postgres in spawn_db_pool");
+
+    conn.execute(format!(r#"CREATE DATABASE "{}";"#, config.database_name).as_str())
+        .await
+        .expect("Failed to create test database with pg_connection in spawn_db_pool");
+
+    // migrate database with existing migrations
     let db_pool = PgPool::connect(&config.get_database_url_without_name())
         .await
         .expect("Failed to spawn db pool in helpers.");
+    sqlx::migrate!("./migrations")
+        .run(&db_pool)
+        .await
+        .expect("Failed to migrate the database");
 
     db_pool
 }
