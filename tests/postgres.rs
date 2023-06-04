@@ -5,11 +5,11 @@ use sqlx::PgPool;
 #[tokio::test]
 async fn query_postgres() {
     let config = config::get_config().expect("Failed to read config in conn_postgres");
-    let conn_string = config.db_settings.get_database_url();
+    let db_url = config.db_settings.get_database_url();
 
-    let conn_pool = PgPool::connect(&conn_string)
+    let conn_pool = PgPool::connect(&db_url)
         .await
-        .expect("Failed to connect to postgres.");
+        .expect("Failed to connect to postgres from postgres_test.");
 
     let saved = sqlx::query!("SELECT email, name FROM subscriptions",)
         .fetch_one(&conn_pool)

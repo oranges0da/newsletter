@@ -34,23 +34,9 @@ pub async fn spawn_app() -> TestApp {
 }
 
 pub async fn spawn_db_pool(config: DBSettings) -> PgPool {
-    let mut connection = PgConnection::connect(&config.get_database_url())
+    let db_pool = PgPool::connect(&config.get_database_url_without_name())
         .await
-        .expect("Failed to connect to postgres");
-
-    connection
-        .execute(format!("CREATE DATABASE {}", config.database_name).as_str())
-        .await
-        .expect("Failed to create test database");
-
-    // create new pool for connections and migrate database
-    let db_pool = PgPool::connect(&config.get_database_url())
-        .await
-        .expect("Failed to connect to Postgres.");
-    sqlx::migrate!("./migrations")
-        .run(&db_pool)
-        .await
-        .expect("Failed to migrate the database");
+        .expect("Failed to spawn db pool in helpers.");
 
     db_pool
 }

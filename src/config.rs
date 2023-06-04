@@ -1,12 +1,12 @@
 use serde::Deserialize;
 
-#[derive(Deserialize)]
+#[derive(Deserialize, Debug)]
 pub struct Settings {
     pub app_port: u16,
     pub db_settings: DBSettings,
 }
 
-#[derive(Deserialize, Clone)]
+#[derive(Deserialize, Clone, Debug)]
 pub struct DBSettings {
     pub username: String,
     pub password: String,
@@ -16,6 +16,7 @@ pub struct DBSettings {
 }
 
 impl DBSettings {
+    // simple getters
     pub fn get_database_url(&self) -> String {
         format!(
             "postgres://{}:{}@{}:{}/{}",
